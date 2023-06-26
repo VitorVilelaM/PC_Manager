@@ -3,15 +3,16 @@ const snmp = require("net-snmp");
 const cors = require("@fastify/cors")
 
 const app = fastify()
-var oids, ipDesejado = "127.0.0.1";
+var oids, ipDesejado = "255.255.255.255";
 
 app.register(cors, {
     origin: true, // Todas as urls de Front-End poderão ser acessar o back-end
 })
 
 app.post('/IP', (request, response)=>{
-    var a = request.body;
-    console.log(a)
+    const {ip} = request.body;
+    ipDesejado = ip;
+    response.send(ipDesejado)
 })
 
 app.get('/memory',(request, response)=>{
