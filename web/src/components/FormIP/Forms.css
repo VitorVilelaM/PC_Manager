@@ -1,0 +1,74 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "CustomFont";
+} 
+
+@font-face {
+    font-family: "CustomFont";
+    src: url("./RolexLight.woff2");
+}
+
+.page{
+    height: 81vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cover{
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 30em;
+    height: 20em;
+    position: relative;
+    border-radius: 1em;
+    box-shadow: 0 0.188em 1.55em #2F4F4F;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+form{
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 30em;
+    height: 20em;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+input{
+    border: none;
+    background-color: rgb(229,226,226);
+    height: 4em;
+    width: 80%;
+    border-radius: 0.25em;
+    text-align: center;
+    padding: 2em;
+}
+
+input:focus{
+    outline-color: #2F4F4F;
+}
+
+button{
+    width: 40%;
+    height: 3em;
+    background-color: #20B2AA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover{
+    transform: scale(1.25);
+}

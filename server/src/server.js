@@ -3,16 +3,20 @@ const snmp = require("net-snmp");
 const cors = require("@fastify/cors")
 
 const app = fastify()
-var oids, ipDesejado;
+var oids, ipDesejado = "127.0.0.1";
 
 app.register(cors, {
     origin: true, // Todas as urls de Front-End poderão ser acessar o back-end
 })
 
+app.post('/IP', (request, response)=>{
+    var a = request.body;
+    console.log(a)
+})
+
 app.get('/memory',(request, response)=>{
     oids = ["1.3.6.1.2.1.25.2.3.1.6.1", "1.3.6.1.2.1.25.2.2.0"]
-    ipDesejado = "127.0.0.1"
-
+  
     // 1º - A quantidade de armazenamento representada por esta entrada que é alocado, em unidades de Storage Allocation Units.
     // 2° - A quantidade de memória física principal de leitura/gravação, tipicamente RAM, contida pelo host.
     
@@ -30,8 +34,7 @@ app.get('/memory',(request, response)=>{
 
 app.get('/process', (request, response)=>{   
     oids = ["1.3.6.1.2.1.25.1.6.0"]
-    ipDesejado = "127.0.0.1"
-
+ 
     // Numero de processos dentro do processador
 
     var session = snmp.createSession (ipDesejado, "public");
@@ -45,28 +48,10 @@ app.get('/process', (request, response)=>{
     });
 })
 
-app.get('/ip', (request, response)=>{
-    oids = ["1.3.6.1.2.1.4.3.0", "1.3.6.1.2.1.4.10.0"]
-    ipDesejado = "127.0.0.1"
-
-    // Numero de datagramas que entraram e sairam no meu PC, do protocolo IP
-
-    var session = snmp.createSession (ipDesejado, "public");
-    session.get(oids, function (error, varbinds) {
-        if (error) {
-            console.error (error);
-        }else{
-            response.send(varbinds);
-        }
-        session.close ();
-    });
-})
-
-app.get('/tcp', (request, response)=>{
-    oids = ["1.3.6.1.2.1.6.10.0" , "1.3.6.1.2.1.6.11.0"]
-    ipDesejado = "127.0.0.1"
-
-    // Numero de datagramas que entraram e sairam no meu PC, do protocolo IP
+app.get('/protocolsInput', (request, response)=>{
+    oids = ["1.3.6.1.2.1.4.3.0", "1.3.6.1.2.1.6.10.0", "1.3.6.1.2.1.7.1.0"]
+ 
+    // Numero de datagramas que entraram no meu PC, do protocolo IP, TCP e UDP
 
     var session = snmp.createSession (ipDesejado, "public");
     session.get(oids, function (error, varbinds) {
@@ -79,11 +64,11 @@ app.get('/tcp', (request, response)=>{
     });
 })
 
-app.get('/udp', (request, response)=>{
-    oids = ["1.3.6.1.2.1.7.1.0", "1.3.6.1.2.1.7.4.0"]
-    ipDesejado = "127.0.0.1"
-
-    // Numero de datagramas que entraram e sairam no meu PC, do protocolo IP
+app.get('/protocols', (request, response)=>{
+    oids = ["1.3.6.1.2.1.4.3.0", "1.3.6.1.2.1.6.10.0", "1.3.6.1.2.1.7.1.0","1.3.6.1.2.1.4.10.0", "1.3.6.1.2.1.6.11.0", "1.3.6.1.2.1.7.4.0"]
+    // IPIN, TCPIN, UDPIN, IPOUT, TCPOUT, UDPOUT
+    
+    // Todos os Datagramas do Meu pc
 
     var session = snmp.createSession (ipDesejado, "public");
     session.get(oids, function (error, varbinds) {
